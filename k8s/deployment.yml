@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: static-website
-        image: Adh-il7/static-website:replaceImageTag
+        image: adhil7/static-website:11
         ports:
         - containerPort: 80
         resources:
