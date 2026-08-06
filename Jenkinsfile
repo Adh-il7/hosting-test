@@ -50,17 +50,26 @@ pipeline {
             GIT_USER_NAME = "Adh-il7"
         }
         steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
-                    git config user.email "adhilstar303@gmail.com"
-                    git config user.name "${GIT_USER_NAME}"
-                    
-                    sed -i "s|image: .*|image: adhil7/static-website:${BUILD_NUMBER}|g" k8s/deployment.yml
-                    
-                    git add k8s/deployment.yml
-                    git commit -m "Update static site image tag to ${BUILD_NUMBER} [skip ci]" || echo "No changes to commit"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
+    withCredentials([
+        usernamePassword(
+            credentialsId: 'github',
+            usernameVariable: 'GITHUB_USERNAME',
+            passwordVariable: 'GITHUB_TOKEN'
+        )
+    ]) {
+        sh '''
+            git config user.email "adhilstar303@gmail.com"
+            git config user.name "${GIT_USER_NAME}"
+
+            sed -i "s|image: .*|image: adhil7/static-website:${BUILD_NUMBER}|g" k8s/deployment.yml
+
+            git add k8s/deployment.yml
+            git commit -m "Update static site image tag to ${BUILD_NUMBER} [skip ci]" || echo "No changes to commit"
+
+            git push https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+        '''
+    }
+}
             }
         }
     }
