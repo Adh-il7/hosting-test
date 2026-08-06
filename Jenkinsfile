@@ -28,7 +28,7 @@ pipeline {
 
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "Adh-il7/static-website:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "adhil7/static-website:${BUILD_NUMBER}"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
