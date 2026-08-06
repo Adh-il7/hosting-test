@@ -68,8 +68,6 @@ pipeline {
 
             git push https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
         '''
-    }
-}
             }
         }
     }
